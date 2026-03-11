@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Payment System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f9;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        nav .logo span { color: #e74c3c; }
+        nav a.admin-link {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        nav a.admin-link:hover { color: white; }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .hero h1 span { color: #e74c3c; }
+        .hero p {
+            font-size: 1.1rem;
+            color: #ccc;
+            max-width: 500px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(231,76,60,0.2);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        /* ── STATS BAR ── */
+        .stats {
+            background: white;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+        }
+        .stat { text-align: center; }
+        .stat-number {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #e74c3c;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── SECTION ── */
+        .section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        .section-sub {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 35px;
+        }
+
+        /* ── COURSE CARDS ── */
+        .courses {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+        .card-top {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            padding: 25px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .card-icon {
+            font-size: 2.5rem;
+            background: rgba(255,255,255,0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-top h2 {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .card-top .level {
+            color: #aaa;
+            font-size: 0.78rem;
+            margin-top: 3px;
+        }
+        .card-body { padding: 20px; }
+        .card-body p {
+            color: #666;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .price small {
+            font-size: 0.75rem;
+            color: #aaa;
+            font-weight: 400;
+            display: block;
+        }
+        .btn {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: #1a1a2e;
+            color: #666;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.85rem;
+            margin-top: 60px;
+        }
+        footer span { color: #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <a href="/" class="logo">Edu<span>Pay</span></a>
+        <a href="/admin/" class="admin-link">Admin Panel →</a>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-badge">🎓 Online Learning Platform</div>
+        <h1>Learn Today,<br><span>Lead Tomorrow</span></h1>
+        <p>Master in-demand skills with expert-led courses. Pay once, learn forever.</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Courses</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">10K+</div>
+            <div class="stat-label">Students</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">4.9★</div>
+            <div class="stat-label">Rating</div>
+        </div>
+        <div class="stat">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Online</div>
+        </div>
+    </div>
+
+    <!-- COURSES -->
+    <div class="section">
+        <div class="section-title">Available Courses</div>
+        <div class="section-sub">Choose a course and start learning today</div>
+
+        <div class="courses">
+            {% for course in courses %}
+            <div class="card">
+                <div class="card-top">
+                    <div class="card-icon">
+                        {% if course.id == 1 %}🐍
+                        {% elif course.id == 2 %}🌐
+                        {% else %}📊{% endif %}
+                    </div>
+                    <div>
+                        <h2>{{ course.name }}</h2>
+                        <div class="level">⭐ Beginner Friendly</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>{{ course.desc }}</p>
+                    <div class="card-footer">
+                        <div class="price">
+                            ₹{{ course.price }}
+                            <small>One-time payment</small>
+                        </div>
+                        <a href="/course/{{ course.id }}/" class="btn">Buy Now →</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        © 2024 <span>EduPay</span> · Course Payment System · Built with Django
+    </footer>
+
+</body>
+</html>

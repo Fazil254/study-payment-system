@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course.name }} - EduPay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f9;
+        }
+
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo { color: white; font-size: 1.4rem; font-weight: 700; text-decoration: none; }
+        nav .logo span { color: #e74c3c; }
+        nav a.back-link { color: #aaa; text-decoration: none; font-size: 0.85rem; }
+        nav a.back-link:hover { color: white; }
+
+        .container {
+            max-width: 650px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .detail-header {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            padding: 35px 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .detail-icon {
+            font-size: 3rem;
+            background: rgba(255,255,255,0.1);
+            width: 75px;
+            height: 75px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .detail-header h1 { font-size: 1.6rem; font-weight: 700; }
+        .detail-header p { color: #aaa; font-size: 0.85rem; margin-top: 5px; }
+
+        .detail-body { padding: 30px; }
+
+        .detail-body .desc {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        .includes {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .includes h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+        .include-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            color: #444;
+            padding: 6px 0;
+        }
+        .include-item::before {
+            content: '✓';
+            color: #27ae60;
+            font-weight: 700;
+        }
+
+        .detail-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .price small {
+            font-size: 0.78rem;
+            color: #aaa;
+            font-weight: 400;
+            display: block;
+        }
+        .btn {
+            background: #e74c3c;
+            color: white;
+            padding: 13px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn:hover { background: #c0392b; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">Edu<span>Pay</span></a>
+        <a href="/" class="back-link">← All Courses</a>
+    </nav>
+
+    <div class="container">
+        <div class="detail-card">
+
+            <div class="detail-header">
+                <div class="detail-icon">
+                    {% if course.id == 1 %}🐍
+                    {% elif course.id == 2 %}🌐
+                    {% else %}📊{% endif %}
+                </div>
+                <div>
+                    <h1>{{ course.name }}</h1>
+                    <p>⭐ Beginner Friendly · Lifetime Access</p>
+                </div>
+            </div>
+
+            <div class="detail-body">
+                <p class="desc">{{ course.desc }}<br><br>
+                This course is designed to take you from zero to job-ready. You will work on real-world projects and get hands-on experience.</p>
+
+                <div class="includes">
+                    <h3>What's Included</h3>
+                    <div class="include-item">Lifetime access to all lessons</div>
+                    <div class="include-item">Certificate of completion</div>
+                    <div class="include-item">Project-based learning</div>
+                    <div class="include-item">Community support</div>
+                    <div class="include-item">Free future updates</div>
+                </div>
+
+                <div class="detail-footer">
+                    <div class="price">
+                        ₹{{ course.price }}
+                        <small>One-time payment</small>
+                    </div>
+                    <a href="/pay/{{ course.id }}/" class="btn">Proceed to Payment →</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

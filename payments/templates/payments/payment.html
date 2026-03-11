@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment - {{ course.name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6f9;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: #1a1a2e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo { color: white; font-size: 1.4rem; font-weight: 700; text-decoration: none; }
+        nav .logo span { color: #e74c3c; }
+        nav a.back-link { color: #aaa; text-decoration: none; font-size: 0.85rem; }
+        nav a.back-link:hover { color: white; }
+
+        .container {
+            max-width: 520px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+        .page-sub {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        /* Course summary box */
+        .course-summary {
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            color: white;
+        }
+        .course-summary .cname {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .course-summary .clevel {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-top: 3px;
+        }
+        .course-summary .cprice {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        /* Form card */
+        .form-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .form-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+        .form-section-title:first-child { margin-top: 0; }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.92rem;
+            color: #333;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+        input:focus { border-color: #e74c3c; }
+        input[readonly] { background: #f8f8f8; color: #888; cursor: not-allowed; }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #f0f0f0;
+            margin: 20px 0;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 14px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 5px;
+        }
+        .pay-btn:hover { background: #c0392b; transform: translateY(-2px); }
+        .pay-btn:disabled { background: #aaa; cursor: not-allowed; transform: none; }
+
+        .secure-note {
+            text-align: center;
+            font-size: 0.78rem;
+            color: #aaa;
+            margin-top: 12px;
+        }
+
+        /* Success message */
+        .success-box {
+            display: none;
+            background: #d4edda;
+            border: 1px solid #28a745;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .success-box .big { font-size: 2.5rem; margin-bottom: 10px; }
+        .success-box h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .success-box p { font-size: 0.88rem; color: #1e7e34; }
+        .success-box a {
+            display: inline-block;
+            margin-top: 15px;
+            background: #155724;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        /* Spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="logo">Edu<span>Pay</span></a>
+        <a href="/course/{{ course.id }}/" class="back-link">← Back to Course</a>
+    </nav>
+
+    <div class="container">
+        <div class="page-title">Complete Payment</div>
+        <div class="page-sub">You are enrolling in <strong>{{ course.name }}</strong></div>
+
+        <!-- Course Summary -->
+        <div class="course-summary">
+            <div>
+                <div class="cname">{{ course.name }}</div>
+                <div class="clevel">⭐ Beginner Friendly · Lifetime Access</div>
+            </div>
+            <div class="cprice">₹{{ course.price }}</div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="form-card">
+
+            <div class="form-section-title">👤 Your Details</div>
+
+            <label>Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name">
+
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email">
+
+            <hr class="divider">
+
+            <div class="form-section-title">📚 Course Info</div>
+
+            <label>Course</label>
+            <input type="text" id="course" value="{{ course.name }}" readonly>
+
+            <label>Amount (₹)</label>
+            <input type="text" id="amount" value="{{ course.price }}" readonly>
+
+            <hr class="divider">
+
+            <button class="pay-btn" id="payBtn" onclick="makePayment()">
+                💰 Pay ₹{{ course.price }} Now
+            </button>
+
+            <p class="secure-note">🔒 This is a simulated payment. No real money is charged.</p>
+
+            <!-- Success Message -->
+            <div class="success-box" id="successMsg">
+                <div class="big">🎉</div>
+                <h3>Payment Successful!</h3>
+                <p>You have successfully enrolled in <strong>{{ course.name }}</strong>.<br>Check your email for details.</p>
+                <a href="/">← Back to Courses</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        async function makePayment() {
+            const name   = document.getElementById('name').value.trim();
+            const email  = document.getElementById('email').value.trim();
+            const course = document.getElementById('course').value;
+            const amount = document.getElementById('amount').value;
+
+            // Validation
+            if (!name || !email) {
+                alert('⚠️ Please fill in your name and email!');
+                return;
+            }
+            if (!email.includes('@')) {
+                alert('⚠️ Please enter a valid email address!');
+                return;
+            }
+
+            // Show loading
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Processing...';
+
+            // Simulate delay
+            await new Promise(r => setTimeout(r, 1500));
+
+            // Get CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            try {
+                const response = await fetch('/process/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ name, email, course, amount })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Hide button, show success
+                    btn.style.display = 'none';
+                    document.getElementById('successMsg').style.display = 'block';
+                } else {
+                    alert('Payment failed. Please try again.');
+                    btn.disabled = false;
+                    btn.innerHTML = '💰 Pay ₹{{ course.price }} Now';
+                }
+            } catch (err) {
+                alert('Something went wrong. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = '💰 Pay ₹{{ course.price }} Now';
+            }
+        }
+    </script>
+
+</body>
+</html>
